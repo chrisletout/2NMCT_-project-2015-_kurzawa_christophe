@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7ff613bf78ab057293892fdbd4169eda899c89b9">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-b5b9544a8de9da67dcf06f671438a7e3c7383db1.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e3d791b42eaa90416cd0b2d2e608092794a3baa4">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-ffd59e052ca3b21f00a84147b62c2bef9fc5b930.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="055783146ba9654a725442563be78cad303aad1f">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-816381457820a4f109c70c86ff6e50dd1a2dd401.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9224bc4c54ba95147c7eabd874573763c07cb6be">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-fc73301eea4c004d805336dd9bd008c2f421176c.jar" />
+    </item>
+    <item
+        jar="/home/chris/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-dfcf13cb992947730b46b560285e5ef048e0bf8c.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.android.support/support-v13/20.0.0/libs/internal_impl-20.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="27bbd3982cdfe4468a9bf99c8c773734a9049e33">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-1a8707ec24816666b63042f3ac730b73fbe35ed6.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-a0879fabe2d67de086465c6d746bed811461b00b.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.android.support/support-v13/20.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e128103d5281ddd26195a7f980b36d0d005a4e56">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-780b96c1a47e7f85c7221adc79915faef1558d11.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c976518693e89ad44fbfccfc654941eaec198d08">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-6d0c2d14599ad9df30220d85a1fb8c1c523d3b7d.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="3033cc3a2c68dff3e5b646d6d084bdbdf7d00b25">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-1ac63b853ac12420d7b22299e3927caa2ce0105e.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="29fd6d3794b71491c2789708cd8d03c71feb8954">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-93d6aeea655f41d549ae1518a227227862a25cfd.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4c93d99d454c975536bbe3b42283eee847f03ea3">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-21aae4991f0a1354b615a1fd75750c4b9901340e.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4cd0b093824b3228fffc21ea369b98d0b1db6566">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-702835676abfe6e110ba1fceb725d3706acc6007.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="fb04b12526b0073c7fb1ebb70c5842d82ee95596">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-d5fddfedcb08f79ef3548407650ee94253ded091.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ef5f051e7308febe289dc93c67c5f32785b4260a">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-e140e596e5b2eb3b2a2fc7530e2d190e5f5f42e3.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-88fd7e3e84efa11f602553d2b2d78b27696bc928.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="3c0b099f9de16b265ecd6122fcb603e7d0d29f90">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-3fab9152a9f3784efcb8518a42179b26ac6763ef.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a96b762bde4139de855735f175ec4d17dca55a6d">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-bef46c6599f0fb0a03333b79d874761bb2f7b4c5.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="41b3870cbe5fa546d8095b5b89d42cb69f3dd175">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-13ae34549f28439329e85003d0c0688900fd9a96.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1c5a76debf0c2857ccad422c4a80ed785982f8df">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-b8cb597917d2679f6747b20df0086c5364abdc47.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="17f8750d5c0749e44dd7c54aa390d9c937803825">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-a25f76d205793b47df0afacaa7d5d45df94e6885.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="73ccb92b70112f2e463e415ef8d7275de7da6516">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-e6d0b26db310d6fb9b42d61a20e283cc4e975277.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-b87a92b8153587b784a77cbc5e4c065b87c517df.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a08d65794b844d8e7540bf9a33859bf3b2482d7f">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-eb4e186a60a0efbd7c7122d7417c0362d74f97aa.jar" />
+    </item>
+    <item
+        jar="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0e8228b4bc69c6a2c8d7c18498a77e53417d2574">
+        <dex dex="/home/chris/Mobile-App-Development-DES/desopdrachtmobileapp/app/build/intermediates/pre-dexed/debug/classes-78f301d30c0ce1b46d0b544a1615c9d38811c366.jar" />
+    </item>
+
+</items>
