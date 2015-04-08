@@ -28,14 +28,19 @@ public class MapsFragment extends android.support.v4.app.Fragment {
     View rootView;
     private GoogleMap map;
     private SupportMapFragment fragment;
+    private double[] school;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 //        rootView = inflater.inflate(R.layout.fragment_maps, container, false);
 //        return rootView;
-        Bundle args = getArguments();
+        try {
+            Bundle args = getArguments();
+            school = args.getDoubleArray("schoollatlng");
+        }catch (Exception ex){}
 
         return inflater.inflate(R.layout.fragment_maps, container, false);
 //        SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
@@ -79,7 +84,8 @@ public class MapsFragment extends android.support.v4.app.Fragment {
         super.onResume();
         if (map == null) {
             map = fragment.getMap();
-//            map.addMarker(new MarkerOptions().position(new LatLng(50.824737, 3.249512)));
+            if(school!=null)
+                map.addMarker(new MarkerOptions().position(new LatLng(school[0], school[1])));
             map.setMyLocationEnabled(true);
         }
     }

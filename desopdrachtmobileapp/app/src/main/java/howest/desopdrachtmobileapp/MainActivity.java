@@ -2,6 +2,7 @@ package howest.desopdrachtmobileapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,21 +62,23 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
     public void onNavigationDrawerItemSelected(int position) {
 
         Fragment objFragment = null;
-
+        int uId=956897;
         switch (position){
             case 0:
                 objFragment = new MainFragment();
+                uId=157845678;
                 break;
             case 1:
 //                    school = school;
                 objFragment = new MapsFragment();
+                uId=4578545;
                 Bundle args = new Bundle();
-                args.putDouble("schoollat", school[0]);
-                args.putDouble("schoollng", school[1]);
+                args.putDoubleArray("schoollatlng", school);
                 objFragment.setArguments(args);
                 break;
             case 2:
                 objFragment = new DirectionFragment();
+                uId=84546754;
 //                Bundle args = new Bundle();
 //                args.putInt(DirectionFragment.ARG_POSITION, position);
 //                newFragment.setArguments(args);
@@ -86,6 +90,9 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
 //                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .replace(R.id.container, objFragment)
                 .commit();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.add(android.R.id.content,objFragment);
+//        fragmentTransaction.commit();
     }
 
     public void onSectionAttached(int number) {

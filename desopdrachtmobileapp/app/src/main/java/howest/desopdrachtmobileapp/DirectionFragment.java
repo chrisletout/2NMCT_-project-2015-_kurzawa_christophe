@@ -18,9 +18,9 @@ public class DirectionFragment extends android.support.v4.app.Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public final double latitude = 50.824737;
-    public final double longitude = 3.249512;
     public final double[] schoollatlng = {50.824737,3.249512};
+    private CheckBox school;
+    View v;
     TextClicked mCallback;
 
     public interface TextClicked{
@@ -41,8 +41,8 @@ public class DirectionFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_direction, container, false);
-        CheckBox school = (CheckBox) v.findViewById(R.id.checkBoxschool);
+         v = inflater.inflate(R.layout.fragment_direction, container, false);
+        school = (CheckBox) v.findViewById(R.id.checkBoxschool);
 //        if (school.isChecked()) {
 //            mCallback.sendText(schoollatlng);
 //        }
@@ -52,7 +52,26 @@ public class DirectionFragment extends android.support.v4.app.Fragment {
                 updateMapSender(buttonView, isChecked);
             }
         });
+
         return v;
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+//        school = null;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+//        savedState = saveState(); /* vstup defined here for sure */
+//        school = null;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     private void updateMapSender(CompoundButton buttonView, boolean isChecked) {
