@@ -11,9 +11,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.inthecheesefactory.thecheeselibrary.fragment.support.v4.app.StatedFragment;
+
 import java.util.zip.Inflater;
 
-public class DirectionFragment extends android.support.v4.app.Fragment {
+public class DirectionFragment extends StatedFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -22,6 +24,27 @@ public class DirectionFragment extends android.support.v4.app.Fragment {
     private CheckBox school;
     View v;
     TextClicked mCallback;
+    // State saven wanneer het fragment afgesloten wordt
+    Bundle savedState;
+
+    @Override
+    protected void onSaveState(Bundle outState) {
+        super.onSaveState(outState);
+        // For example:
+        //outState.putString("text", tvSample.getText().toString());
+        outState.putBoolean("school", school.isChecked());
+    }
+
+    /**
+     * Restore Fragment's State here
+     */
+    @Override
+    protected void onRestoreState(Bundle savedInstanceState) {
+        super.onRestoreState(savedInstanceState);
+        // For example:
+        //tvSample.setText(savedInstanceState.getString("text"));
+        school.setChecked(savedInstanceState.getBoolean("school"));
+    }
 
     public interface TextClicked{
         public void sendText(double[] text);
@@ -40,8 +63,18 @@ public class DirectionFragment extends android.support.v4.app.Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          v = inflater.inflate(R.layout.fragment_direction, container, false);
+        initInstances(v);
+        return v;
+    }
+    private void initInstances(View rootView) {
+        // init instance with rootView.findViewById here
         school = (CheckBox) v.findViewById(R.id.checkBoxschool);
 //        if (school.isChecked()) {
 //            mCallback.sendText(schoollatlng);
@@ -52,26 +85,6 @@ public class DirectionFragment extends android.support.v4.app.Fragment {
                 updateMapSender(buttonView, isChecked);
             }
         });
-
-        return v;
-    }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-//        school = null;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-//        savedState = saveState(); /* vstup defined here for sure */
-//        school = null;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     private void updateMapSender(CompoundButton buttonView, boolean isChecked) {

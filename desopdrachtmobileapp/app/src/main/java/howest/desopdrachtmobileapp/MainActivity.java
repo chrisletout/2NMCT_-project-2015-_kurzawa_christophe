@@ -62,37 +62,31 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
     public void onNavigationDrawerItemSelected(int position) {
 
         Fragment objFragment = null;
-        int uId=956897;
-        switch (position){
+        String uId = "fr-";
+        switch (position) {
             case 0:
                 objFragment = new MainFragment();
-                uId=157845678;
+                uId = "fr0";
                 break;
             case 1:
 //                    school = school;
                 objFragment = new MapsFragment();
-                uId=4578545;
+                uId = "fr1";
                 Bundle args = new Bundle();
                 args.putDoubleArray("schoollatlng", school);
                 objFragment.setArguments(args);
                 break;
             case 2:
                 objFragment = new DirectionFragment();
-                uId=84546754;
-//                Bundle args = new Bundle();
-//                args.putInt(DirectionFragment.ARG_POSITION, position);
-//                newFragment.setArguments(args);
+                uId = "fr2";
                 break;
         }
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
 //                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .replace(R.id.container, objFragment)
+                .replace(R.id.container, objFragment,uId)
                 .commit();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.add(android.R.id.content,objFragment);
-//        fragmentTransaction.commit();
     }
 
     public void onSectionAttached(int number) {
