@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.inthecheesefactory.thecheeselibrary.fragment.support.v4.app.StatedFragment;
 
@@ -21,7 +22,8 @@ public class DirectionFragment extends StatedFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public final double[] schoollatlng = {50.824737,3.249512};
-    private CheckBox school;
+    private CheckBox school, restaurant, winkels, luchthaven, bakkerij;
+    private TextView otherPlaces;
     View v;
     TextClicked mCallback;
     // State saven wanneer het fragment afgesloten wordt
@@ -47,7 +49,7 @@ public class DirectionFragment extends StatedFragment {
     }
 
     public interface TextClicked{
-        public void sendText(double[] text);
+        public void sendText(String text);
     }
 
     @Override
@@ -76,20 +78,45 @@ public class DirectionFragment extends StatedFragment {
     private void initInstances(View rootView) {
         // init instance with rootView.findViewById here
         school = (CheckBox) v.findViewById(R.id.checkBoxschool);
-//        if (school.isChecked()) {
-//            mCallback.sendText(schoollatlng);
-//        }
+        winkels = (CheckBox) v.findViewById(R.id.checkBoxwinkels);
+        restaurant = (CheckBox) v.findViewById(R.id.checkBoxRestaurant);
+        luchthaven = (CheckBox) v.findViewById(R.id.checkBoxLuchthaven);
+        bakkerij = (CheckBox) v.findViewById(R.id.checkBoxBakkerij);
         school.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updateMapSender(buttonView, isChecked);
+                updateMapSender(buttonView, isChecked, "school");
+            }
+        });
+        winkels.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateMapSender(buttonView, isChecked, "winkels");
+            }
+        });
+        restaurant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateMapSender(buttonView, isChecked, "restaurant");
+            }
+        });
+        luchthaven.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateMapSender(buttonView, isChecked, "luchthaven");
+            }
+        });
+        bakkerij.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateMapSender(buttonView, isChecked, "bakkerij");
             }
         });
     }
 
-    private void updateMapSender(CompoundButton buttonView, boolean isChecked) {
+    private void updateMapSender(CompoundButton buttonView, boolean isChecked, String type) {
         if (isChecked == true) {
-            mCallback.sendText(schoollatlng);
+            mCallback.sendText(type);
         }
     }
 }

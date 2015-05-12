@@ -3,6 +3,7 @@ package howest.desopdrachtmobileapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -21,9 +22,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 
 public class MainActivity extends ActionBarActivity implements DirectionFragment.TextClicked, NavigationDrawerFragment.NavigationDrawerCallbacks {
-    public double[] school;
+    public String[] types;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -35,12 +38,15 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
     private CharSequence mTitle;
 
     @Override
-    public void sendText(double[] text){
+    public void sendText(String text){
         // Get Fragment B
 //        MapsFragment frag = (MapsFragment)
 //                getSupportFragmentManager().findFragmentById(R.id.);
 //        frag.updateText(text);
-        school = text;
+        if (!Arrays.asList(types).contains(text)) {
+            types[types.length+1]= text;
+        }
+
     }
 
     @Override
@@ -62,10 +68,11 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
     public void onNavigationDrawerItemSelected(int position) {
 
         Fragment objFragment = null;
+        android.app.ListFragment fragments = null;
         String uId = "fr-";
         switch (position) {
             case 0:
-                objFragment = new MainFragment();
+                fragments = new MainFragment();
                 uId = "fr0";
                 break;
             case 1:
@@ -73,7 +80,7 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
                 objFragment = new MapsFragment();
                 uId = "fr1";
                 Bundle args = new Bundle();
-                args.putDoubleArray("schoollatlng", school);
+                args.putStringArray("types", types);
                 objFragment.setArguments(args);
                 break;
             case 2:
@@ -82,10 +89,9 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
                 break;
         }
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-//                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .replace(R.id.container, objFragment,uId)
+        getFragmentManager().beginTransaction()
+                .add(R.id.container, fragments)
+                .addToBackStack(null)
                 .commit();
     }
 
