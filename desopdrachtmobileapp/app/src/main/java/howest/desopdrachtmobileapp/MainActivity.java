@@ -23,10 +23,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class MainActivity extends ActionBarActivity implements DirectionFragment.TextClicked, NavigationDrawerFragment.NavigationDrawerCallbacks {
     public String[] types;
+    String oldFragmentTag;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -43,9 +45,9 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
 //        MapsFragment frag = (MapsFragment)
 //                getSupportFragmentManager().findFragmentById(R.id.);
 //        frag.updateText(text);
-        if (!Arrays.asList(types).contains(text)) {
-            types[types.length+1]= text;
-        }
+//        if (!Arrays.asList(types).contains(text)) {
+//            types[types.length+1]= text;
+//        }
 
     }
 
@@ -69,30 +71,68 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
 
         Fragment objFragment = null;
         android.app.ListFragment fragments = null;
-        String uId = "fr-";
         switch (position) {
-            case 0:
+            case 2:
                 fragments = new MainFragment();
-                uId = "fr0";
+                updateFragment(fragments, objFragment, "main1");
+                oldFragmentTag = "main";
                 break;
             case 1:
-//                    school = school;
                 objFragment = new MapsFragment();
-                uId = "fr1";
                 Bundle args = new Bundle();
                 args.putStringArray("types", types);
                 objFragment.setArguments(args);
+                updateFragment(fragments, objFragment, "maps");
+                oldFragmentTag = "maps";
                 break;
-            case 2:
+            case 0:
                 objFragment = new DirectionFragment();
-                uId = "fr2";
+                updateFragment(fragments, objFragment, "direction");
+                oldFragmentTag = "direction";
                 break;
         }
         // update the main content by replacing fragments
-        getFragmentManager().beginTransaction()
-                .add(R.id.container, fragments)
-                .addToBackStack(null)
-                .commit();
+
+    }
+
+    public void updateFragment(android.app.ListFragment fragments, Fragment objFragment, String tag){
+
+        if(fragments != null) {
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, fragments, tag)
+                        .addToBackStack(null)
+                        .commit();
+        }else {
+            Fragment f = this.getSupportFragmentManager().findFragmentByTag(tag);
+            if(f != null){
+                getSupportFragmentManager().beginTransaction()
+                        .show(f)
+                        .commit();
+
+            }else {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, objFragment, tag)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        }
+
+//                if(oldFragmentTag == "main"){
+//            android.app.Fragment f = getFragmentManager().findFragmentByTag(oldFragmentTag);
+//                    getFragmentManager().beginTransaction()
+//                    .hide(f)
+//                    .addToBackStack(null)
+//                    .commit();
+//            oldFragmentTag = null;
+//        }
+        if(oldFragmentTag != "main" && oldFragmentTag != null){
+            Fragment f = getSupportFragmentManager().findFragmentByTag(oldFragmentTag);
+            getSupportFragmentManager().beginTransaction()
+                    .hide(f)
+                    .commit();
+            oldFragmentTag = null;
+        }
     }
 
     public void onSectionAttached(int number) {
