@@ -118,14 +118,14 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
             }
         }
 
-//                if(oldFragmentTag == "main"){
-//            android.app.Fragment f = getFragmentManager().findFragmentByTag(oldFragmentTag);
-//                    getFragmentManager().beginTransaction()
-//                    .hide(f)
-//                    .addToBackStack(null)
-//                    .commit();
-//            oldFragmentTag = null;
-//        }
+                if(oldFragmentTag == "main"){
+            android.app.Fragment f = getFragmentManager().findFragmentByTag(oldFragmentTag);
+                    getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new android.app.Fragment())
+                    .addToBackStack(null)
+                    .commit();
+            oldFragmentTag = null;
+        }
         if(oldFragmentTag != "main" && oldFragmentTag != null){
             Fragment f = getSupportFragmentManager().findFragmentByTag(oldFragmentTag);
             getSupportFragmentManager().beginTransaction()
