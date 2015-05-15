@@ -12,8 +12,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+
+import com.koushikdutta.ion.Ion;
 
 import howest.desopdrachtmobileapp.Loader.Contract;
 import howest.desopdrachtmobileapp.Loader.PlacesLoader;
@@ -24,6 +27,7 @@ import howest.desopdrachtmobileapp.Loader.PlacesLoader;
 public class MainFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     View rootView;
     SimpleCursorAdapter mAdapter;
+    String[] types;
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
@@ -41,6 +45,15 @@ public class MainFragment extends ListFragment implements LoaderManager.LoaderCa
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        //get communicatie
+        try {
+            Bundle args = getArguments();
+            types = args.getStringArray("types");
+        }catch (Exception ex){}
+
+        //end communicatie
+
         String[] columns = new String[] {
                 Contract.placesColumns.COLUMN_NAAM,
                 Contract.placesColumns.COLUMN_STRAAT,
@@ -72,11 +85,18 @@ public class MainFragment extends ListFragment implements LoaderManager.LoaderCa
             int straatIndex = cursor.getColumnIndex(Contract.placesColumns.COLUMN_STRAAT);
             int latIndex = cursor.getColumnIndex(Contract.placesColumns.COLUMN_LAT);
             int longetitudeIndex = cursor.getColumnIndex(Contract.placesColumns.COLUMN_LONG);
+            int imageIndex = cursor.getColumnIndex(Contract.placesColumns.COLUMN_TYPE);
 
             TextView naam = (TextView) view.findViewById(R.id.txtnaam);
             TextView straat = (TextView) view.findViewById(R.id.txtstraat);
+            ImageView image = (ImageView) view.findViewById(R.id.image);
             naam.setText(cursor.getString(naamIndex));
             straat.setText(cursor.getString(straatIndex));
+//            image.
+            Ion.with(context)
+                    .load(cursor.getString(imageIndex))
+                    .withBitmap()
+                    .intoImageView(image);
         }
     }
 
@@ -87,7 +107,7 @@ public class MainFragment extends ListFragment implements LoaderManager.LoaderCa
         // This is called when a new Loader needs to be created.
         //create and return a CursorLoader that will take care of
         // creating a Cursor for the data being displayed.
-        return new PlacesLoader(getActivity());
+        return new PlacesLoader(getActivity(), types);
     }
 
 }

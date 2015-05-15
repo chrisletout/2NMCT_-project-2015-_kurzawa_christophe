@@ -26,4 +26,5 @@ dependencies {
 //    compile 'com.android.support:support-v13:13.0.+'
     compile 'com.google.android.gms:play-services:6.+'
     compile 'com.inthecheesefactory.thecheeselibrary:stated-fragment-support-v4:0.9.3'
+    compile 'com.koushikdutta.ion:ion:2.+'
 }

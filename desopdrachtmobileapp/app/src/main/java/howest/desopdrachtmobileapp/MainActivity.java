@@ -22,12 +22,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
 
 public class MainActivity extends ActionBarActivity implements DirectionFragment.TextClicked, NavigationDrawerFragment.NavigationDrawerCallbacks {
-    public String[] types;
+    public ArrayList<String> types = new ArrayList<String>();
     String oldFragmentTag;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -45,9 +46,22 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
 //        MapsFragment frag = (MapsFragment)
 //                getSupportFragmentManager().findFragmentById(R.id.);
 //        frag.updateText(text);
-//        if (!Arrays.asList(types).contains(text)) {
-//            types[types.length+1]= text;
-//        }
+        if (!types.contains(text)) {
+            types.add(text);
+        }
+
+    }
+    @Override
+    public void deleteText(String text){
+        // Get Fragment B
+//        MapsFragment frag = (MapsFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.);
+//        frag.updateText(text);
+        if (types.contains(text)) {
+//            types.add(text);
+            types.remove(types.indexOf(text));
+            types = types;
+        }
 
     }
 
@@ -71,16 +85,23 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
 
         Fragment objFragment = null;
         android.app.ListFragment fragments = null;
+        //omzetten arraylist in array van strings
+        Bundle args = new Bundle();
+        String[] mStringArray = new String[types.size()];
+        mStringArray = types.toArray(mStringArray);
+        // end omzetten
+
         switch (position) {
-            case 2:
+            case 1:
                 fragments = new MainFragment();
+                args.putStringArray("types", mStringArray);
+                fragments.setArguments(args);
                 updateFragment(fragments, objFragment, "main1");
                 oldFragmentTag = "main";
                 break;
-            case 1:
+            case 2:
                 objFragment = new MapsFragment();
-                Bundle args = new Bundle();
-                args.putStringArray("types", types);
+                args.putStringArray("types", mStringArray);
                 objFragment.setArguments(args);
                 updateFragment(fragments, objFragment, "maps");
                 oldFragmentTag = "maps";

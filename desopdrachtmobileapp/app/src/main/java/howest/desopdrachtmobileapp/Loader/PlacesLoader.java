@@ -34,12 +34,19 @@ public class PlacesLoader extends AsyncTaskLoader<Cursor> {
             Contract.placesColumns.COLUMN_NAAM,
             Contract.placesColumns.COLUMN_STRAAT,
             Contract.placesColumns.COLUMN_LAT,
-            Contract.placesColumns.COLUMN_LONG
+            Contract.placesColumns.COLUMN_LONG,
+            Contract.placesColumns.COLUMN_TYPE
     };
+    String[] types;
     private static Object lock = new Object();
 
     public PlacesLoader(Context context) {
         super(context);
+//        this.mCursor = mCursor;
+    }
+    public PlacesLoader(Context context, String[] types) {
+        super(context);
+        this.types = types;
 //        this.mCursor = mCursor;
     }
 
@@ -54,10 +61,70 @@ public class PlacesLoader extends AsyncTaskLoader<Cursor> {
     @Override
     public Cursor loadInBackground() {
         if(mCursor == null)
+            if(types == null)
             loadCursor();
+            else
+            loadCursorTypes();
+
 
         return mCursor;
     }
+
+    private void loadCursorTypes() {
+        synchronized (lock){
+            if(mCursor != null) return;
+
+            MatrixCursor cursor = new MatrixCursor(mColumnNames);
+            InputStream input = null;
+            JsonReader reader = null;
+
+            for (String var : types) {
+                JSONArray json = null;
+                String str = "";
+                HttpResponse response;
+                HttpClient myClient = new DefaultHttpClient();
+                HttpGet myConnection = new HttpGet("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+var+"+in+kortrijk&key=AIzaSyBq23lNzzJYFV9rAgZiLRmOj0XUl_tQCAw");
+                int id = 1;
+                try {
+                    response = myClient.execute(myConnection);
+                    str = EntityUtils.toString(response.getEntity(), "UTF-8");
+
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    JSONObject jArray = new JSONObject(str);
+                    json = jArray.getJSONArray("results");
+
+                    while (id - 1 < json.length()) {
+
+                        JSONObject results = json.getJSONObject(id - 1);
+                        JSONObject geometry = results.getJSONObject("geometry");
+                        JSONObject coordinates = geometry.getJSONObject("location");
+
+
+                        MatrixCursor.RowBuilder row = cursor.newRow();
+                        row.add(id);
+                        row.add(results.getString("name"));
+                        row.add(results.getString("formatted_address"));
+                        row.add(coordinates.getDouble("lat"));
+                        row.add(coordinates.getDouble("lng"));
+                        row.add(results.getString("icon"));
+
+                        id++;
+                    }
+//                    mCursor = cursor;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            mCursor = cursor;
+        }
+    }
+
     public void loadCursor(){
         synchronized (lock){
             if(mCursor != null) return;
@@ -100,6 +167,7 @@ public class PlacesLoader extends AsyncTaskLoader<Cursor> {
                     row.add(results.getString("formatted_address"));
                     row.add(coordinates.getDouble("lat"));
                     row.add(coordinates.getDouble("lng"));
+                    row.add(results.getString("icon"));
 
                     id++;
                 }

@@ -50,6 +50,7 @@ public class DirectionFragment extends StatedFragment {
 
     public interface TextClicked{
         public void sendText(String text);
+        public void deleteText(String text);
     }
 
     @Override
@@ -117,6 +118,8 @@ public class DirectionFragment extends StatedFragment {
     private void updateMapSender(CompoundButton buttonView, boolean isChecked, String type) {
         if (isChecked == true) {
             mCallback.sendText(type);
+        }else{
+            mCallback.deleteText(type);
         }
     }
 }

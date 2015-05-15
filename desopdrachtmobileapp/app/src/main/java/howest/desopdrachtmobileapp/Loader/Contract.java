@@ -11,5 +11,6 @@ public class Contract {
         public static final String COLUMN_STRAAT = "Maand";
         public static final String COLUMN_LAT = "Straat";
         public static final String COLUMN_LONG = "Postcode";
+        public static final String COLUMN_TYPE = "Type";
     }
 }
