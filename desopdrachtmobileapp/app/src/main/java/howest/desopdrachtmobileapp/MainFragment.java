@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -25,14 +26,11 @@ import howest.desopdrachtmobileapp.Loader.PlacesLoader;
  * Created by chris on 30/03/15.
  */
 public class MainFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    View rootView;
     SimpleCursorAdapter mAdapter;
     String[] types;
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        cursor = cursor;
-        Cursor c = cursor;
         mAdapter.swapCursor(cursor);
     }
 
@@ -41,6 +39,13 @@ public class MainFragment extends ListFragment implements LoaderManager.LoaderCa
         mAdapter.swapCursor(null);
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Cursor c = (Cursor)mAdapter.getItem(position);
+        c.moveToPosition(position);
+        String name = c.getString(c.getColumnIndex(Contract.placesColumns.COLUMN_NAAM));
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

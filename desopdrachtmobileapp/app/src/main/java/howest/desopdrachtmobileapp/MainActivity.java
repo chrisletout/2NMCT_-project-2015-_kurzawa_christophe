@@ -28,8 +28,9 @@ import java.util.Objects;
 
 
 public class MainActivity extends ActionBarActivity implements DirectionFragment.TextClicked, NavigationDrawerFragment.NavigationDrawerCallbacks {
-    public ArrayList<String> types = new ArrayList<String>();
+    ArrayList<String> types = new ArrayList<String>();
     String oldFragmentTag;
+    public static String[] mStringArray;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -60,7 +61,6 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
         if (types.contains(text)) {
 //            types.add(text);
             types.remove(types.indexOf(text));
-            types = types;
         }
 
     }
@@ -87,7 +87,7 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
         android.app.ListFragment fragments = null;
         //omzetten arraylist in array van strings
         Bundle args = new Bundle();
-        String[] mStringArray = new String[types.size()];
+        mStringArray = new String[types.size()];
         mStringArray = types.toArray(mStringArray);
         // end omzetten
 
@@ -127,9 +127,16 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
         }else {
             Fragment f = this.getSupportFragmentManager().findFragmentByTag(tag);
             if(f != null){
+                if(f instanceof MapsFragment){
+                    ((MapsFragment) f).getContentAndAddMarker();
                 getSupportFragmentManager().beginTransaction()
                         .show(f)
                         .commit();
+                }else {
+                    getSupportFragmentManager().beginTransaction()
+                            .show(f)
+                            .commit();
+                }
 
             }else {
                 getSupportFragmentManager().beginTransaction()

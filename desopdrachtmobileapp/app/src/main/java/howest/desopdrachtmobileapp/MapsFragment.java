@@ -2,6 +2,7 @@ package howest.desopdrachtmobileapp;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -17,9 +18,19 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tagmanager.Container;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by chris on 30/03/15.
@@ -29,7 +40,8 @@ public class MapsFragment extends android.support.v4.app.Fragment {
     private GoogleMap map;
     private SupportMapFragment fragment;
     private String[] types;
-
+    ArrayList<com.google.gson.JsonObject> results = new ArrayList<>();
+    public Bitmap img = null;
 
     @Nullable
     @Override
@@ -37,31 +49,11 @@ public class MapsFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
 //        rootView = inflater.inflate(R.layout.fragment_maps, container, false);
 //        return rootView;
-        try {
-            Bundle args = getArguments();
-            types = args.getStringArray("types");
-        }catch (Exception ex){}
 
         return inflater.inflate(R.layout.fragment_maps, container, false);
-//        SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
-//        mMap = mMapFragment.getMap();
-//
-//        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-//        transaction.add(R.id.map_container, mMapFragment).commit();
-//        return view;
-
-//        try {
-//            rootView = inflater.inflate(R.layout.fragment_maps, container, false);
-//
-//
-//        } catch (InflateException e) {
-//        /* map is already there, just return view as it is */
-//        }
-//        return rootView;
-
     }
     public void onMapReady(GoogleMap map) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(0,0), 2));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(0, 0), 2));
 
         // Other supported types include: MAP_TYPE_NORMAL,
         // MAP_TYPE_TERRAIN, MAP_TYPE_HYBRID and MAP_TYPE_NONE
@@ -84,9 +76,53 @@ public class MapsFragment extends android.support.v4.app.Fragment {
         super.onResume();
         if (map == null) {
             map = fragment.getMap();
+        getContentAndAddMarker();
 //                map.addMarker(new MarkerOptions().position(new LatLng(school[0], school[1])));
 //            map.setMyLocationEnabled(true);
         }
+    }
+
+    public void getContentAndAddMarker() {
+        types = MainActivity.mStringArray;
+        map.clear();
+        for (String var : types)
+            Ion.with(getActivity())
+                    .load("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+var+"+in+kortrijk&key=AIzaSyBq23lNzzJYFV9rAgZiLRmOj0XUl_tQCAw")
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            // do stuff with the result or error
+                            if(e == null){
+                            JsonArray json = result.getAsJsonArray("results");
+                            for(int i = 0; i<json.size();i++){
+                                JsonElement results = json.get(i);
+                                JsonObject res = results.getAsJsonObject();
+                                JsonElement adres = res.get("formatted_address");
+                                final JsonElement name = res.get("name");
+                                JsonElement url = res.get("icon");
+                                JsonObject geometry = res.getAsJsonObject("geometry");
+                                JsonObject location = geometry.getAsJsonObject("location");
+                                final JsonElement lat = location.get("lat");
+                                final JsonElement lng = location.get("lng");
+
+                                Ion.with(getActivity())
+                                        .load(url.getAsString())
+                                        .withBitmap()
+                                        .asBitmap()
+                                        .setCallback(new FutureCallback<Bitmap>() {
+                                            @Override
+                                            public void onCompleted(Exception e, Bitmap result) {
+                                                img = result;
+                                                map.addMarker(new MarkerOptions()
+                                                        .position(new LatLng(lat.getAsDouble(), lng.getAsDouble()))
+                                                        .title(name.getAsString())
+                                                        .icon(BitmapDescriptorFactory.fromBitmap(img)));
+                                            }
+                                        });
+                            }}
+                        }
+                    });
     }
 
     @Override
