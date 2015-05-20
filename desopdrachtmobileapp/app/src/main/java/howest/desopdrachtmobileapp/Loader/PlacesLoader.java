@@ -38,10 +38,17 @@ public class PlacesLoader extends AsyncTaskLoader<Cursor> {
             Contract.placesColumns.COLUMN_TYPE
     };
     String[] types;
+    String text = null;
     private static Object lock = new Object();
 
     public PlacesLoader(Context context) {
         super(context);
+//        this.mCursor = mCursor;
+    }
+    public PlacesLoader(Context context,String text, Cursor mCursor) {
+        super(context);
+        this.text = text;
+        this.mCursor = mCursor;
 //        this.mCursor = mCursor;
     }
     public PlacesLoader(Context context, String[] types) {
@@ -53,18 +60,22 @@ public class PlacesLoader extends AsyncTaskLoader<Cursor> {
     @Override
     protected void onStartLoading() {
         if(mCursor != null){
-            deliverResult(mCursor);
+//            deliverResult(mCursor);
+            forceLoad();
         }
         if(takeContentChanged() || mCursor == null)
             forceLoad();
     }
     @Override
     public Cursor loadInBackground() {
-        if(mCursor == null)
-            if(types == null)
-            loadCursor();
+        if(mCursor == null) {
+            if (types == null)
+                loadCursor();
             else
-            loadCursorTypes();
+                loadCursorTypes();
+        }else {
+            return filterCursorOnName(text);
+        }
 
 
         return mCursor;
@@ -123,6 +134,40 @@ public class PlacesLoader extends AsyncTaskLoader<Cursor> {
             }
             mCursor = cursor;
         }
+    }
+
+    private Cursor filterCursorOnName(String name){
+        final String[] mColumnNames = new String[]{
+                BaseColumns._ID,
+                Contract.placesColumns.COLUMN_NAAM,
+                Contract.placesColumns.COLUMN_STRAAT,
+                Contract.placesColumns.COLUMN_LAT,
+                Contract.placesColumns.COLUMN_LONG,
+                Contract.placesColumns.COLUMN_TYPE
+        };
+        MatrixCursor newCursor = new MatrixCursor(mColumnNames);
+        int colnr1 = mCursor.getColumnIndex(Contract.placesColumns.COLUMN_NAAM);
+        int colnr2 = mCursor.getColumnIndex(Contract.placesColumns.COLUMN_STRAAT);
+        int colnr3 = mCursor.getColumnIndex(Contract.placesColumns.COLUMN_LAT);
+        int colnr4 = mCursor.getColumnIndex(Contract.placesColumns.COLUMN_LONG);
+        int colnr5 = mCursor.getColumnIndex(Contract.placesColumns.COLUMN_TYPE);
+
+        int id = 1;
+        if (mCursor.moveToFirst())
+            do{
+                if(mCursor.getString(colnr1).toLowerCase().contains(name.toLowerCase().trim())){
+                    MatrixCursor.RowBuilder row = newCursor.newRow();
+                    row.add(id);
+                    row.add(mCursor.getString(colnr1));
+                    row.add(mCursor.getString(colnr2));
+                    row.add(mCursor.getString(colnr3));
+                    row.add(mCursor.getString(colnr4));
+                    row.add(mCursor.getString(colnr5));
+
+                    id++;
+                }
+            }while (mCursor.moveToNext());
+        return newCursor;
     }
 
     public void loadCursor(){

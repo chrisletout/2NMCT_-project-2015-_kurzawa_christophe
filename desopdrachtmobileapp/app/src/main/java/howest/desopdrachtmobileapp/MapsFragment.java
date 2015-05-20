@@ -83,7 +83,7 @@ public class MapsFragment extends android.support.v4.app.Fragment {
     }
 
     public void getContentAndAddMarker() {
-        types = MainActivity.mStringArray;
+        types = MainActivity.getmStringArray();
         map.clear();
         for (String var : types)
             Ion.with(getActivity())

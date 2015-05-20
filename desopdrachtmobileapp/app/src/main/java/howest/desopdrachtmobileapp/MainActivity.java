@@ -27,11 +27,17 @@ import java.util.Arrays;
 import java.util.Objects;
 
 
-public class MainActivity extends ActionBarActivity implements DirectionFragment.TextClicked, NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends ActionBarActivity implements DirectionFragment.TextClicked, NavigationDrawerFragment.NavigationDrawerCallbacks, MainFragment.ListClicked {
     ArrayList<String> types = new ArrayList<String>();
     String oldFragmentTag;
     public static String[] mStringArray;
+
+    public static String[] getmStringArray() {
+        return mStringArray;
+    }
+
     /**
+
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -117,7 +123,23 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
     }
 
     public void updateFragment(android.app.ListFragment fragments, Fragment objFragment, String tag){
-
+        //hiden van fragmenten
+        if(oldFragmentTag == "main"){
+            android.app.Fragment f = getFragmentManager().findFragmentByTag(oldFragmentTag);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new android.app.Fragment())
+                    .addToBackStack(null)
+                    .commit();
+            oldFragmentTag = null;
+        }
+        if(oldFragmentTag != "main" && oldFragmentTag != null){
+            Fragment f = getSupportFragmentManager().findFragmentByTag(oldFragmentTag);
+            getSupportFragmentManager().beginTransaction()
+                    .hide(f)
+                    .commit();
+            oldFragmentTag = null;
+        }
+        //end hide
         if(fragments != null) {
 
                 getFragmentManager().beginTransaction()
@@ -146,21 +168,7 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
             }
         }
 
-                if(oldFragmentTag == "main"){
-            android.app.Fragment f = getFragmentManager().findFragmentByTag(oldFragmentTag);
-                    getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new android.app.Fragment())
-                    .addToBackStack(null)
-                    .commit();
-            oldFragmentTag = null;
-        }
-        if(oldFragmentTag != "main" && oldFragmentTag != null){
-            Fragment f = getSupportFragmentManager().findFragmentByTag(oldFragmentTag);
-            getSupportFragmentManager().beginTransaction()
-                    .hide(f)
-                    .commit();
-            oldFragmentTag = null;
-        }
+
     }
 
     public void onSectionAttached(int number) {
@@ -211,6 +219,12 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void sendLocation(String text, float lat, float longetitude) {
+        int i = 0;
+        int j = 2;
     }
 
     /**

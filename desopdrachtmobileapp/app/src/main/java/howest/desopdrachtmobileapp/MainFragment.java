@@ -1,5 +1,6 @@
 package howest.desopdrachtmobileapp;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.LoaderManager;
@@ -9,13 +10,18 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
 
@@ -25,12 +31,35 @@ import howest.desopdrachtmobileapp.Loader.PlacesLoader;
 /**
  * Created by chris on 30/03/15.
  */
-public class MainFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MainFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>, SearchView.OnQueryTextListener {
     SimpleCursorAdapter mAdapter;
+    ListClicked mCallback;
     String[] types;
+    private String grid_currentQuery = null;
+
+
+
+    public interface ListClicked{
+        public void sendLocation(String text, float lat, float longetitude);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (ListClicked) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement TextClicked");
+        }
+    }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        cursor = cursor;
         mAdapter.swapCursor(cursor);
     }
 
@@ -45,6 +74,9 @@ public class MainFragment extends ListFragment implements LoaderManager.LoaderCa
         Cursor c = (Cursor)mAdapter.getItem(position);
         c.moveToPosition(position);
         String name = c.getString(c.getColumnIndex(Contract.placesColumns.COLUMN_NAAM));
+        float lat = c.getFloat(c.getColumnIndex(Contract.placesColumns.COLUMN_LAT));
+        float longetitude = c.getFloat(c.getColumnIndex(Contract.placesColumns.COLUMN_LONG));
+        mCallback.sendLocation(name, lat, longetitude);
     }
 
     @Override
@@ -105,14 +137,71 @@ public class MainFragment extends ListFragment implements LoaderManager.LoaderCa
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
+        inflater.inflate(R.menu.menulist, menu);
+        SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
+//        searchView.setOnQueryTextListener(queryListener);
+        searchView.setOnQueryTextListener(this);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        if (TextUtils.isEmpty(s)) {
+//                getActivity().getActionBar().setSubtitle("List");
+            grid_currentQuery = null;
+        } else {
+//                getActivity().getActionBar().setSubtitle("List - Searching for: " + newText);
+            grid_currentQuery = s;
+
+        }
+        getLoaderManager().restartLoader(0, null, this);
+        return false;
+    }
+//    final private SearchView.OnQueryTextListener queryListener = new SearchView.OnQueryTextListener() {
+//
+//        @Override
+//        public boolean onQueryTextChange(String newText) {
+//            if (TextUtils.isEmpty(newText)) {
+////                getActivity().getActionBar().setSubtitle("List");
+//                grid_currentQuery = null;
+//            } else {
+////                getActivity().getActionBar().setSubtitle("List - Searching for: " + newText);
+//                grid_currentQuery = newText;
+//
+//            }
+//            getLoaderManager().restartLoader(0, null, MainFragment.this);
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean onQueryTextSubmit(String query) {
+//            Toast.makeText(getActivity(), "Searching for: " + query + "...", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//    };
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // This is called when a new Loader needs to be created.
         //create and return a CursorLoader that will take care of
         // creating a Cursor for the data being displayed.
-        return new PlacesLoader(getActivity(), types);
+        if(grid_currentQuery==null || grid_currentQuery=="")
+            return new PlacesLoader(getActivity(), types);
+        else
+            return new PlacesLoader(getActivity(), grid_currentQuery,mAdapter.getCursor());
     }
 
 }
