@@ -223,8 +223,38 @@ public class MainActivity extends ActionBarActivity implements DirectionFragment
 
     @Override
     public void sendLocation(String text, float lat, float longetitude) {
-        int i = 0;
-        int j = 2;
+        //Fragment getten en locatie zetten
+        if(oldFragmentTag == "main"){
+            android.app.Fragment f = getFragmentManager().findFragmentByTag(oldFragmentTag);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new android.app.Fragment())
+                    .addToBackStack(null)
+                    .commit();
+            oldFragmentTag = null;
+        }
+        Fragment f = this.getSupportFragmentManager().findFragmentByTag("maps");
+        if(f != null){
+            ((MapsFragment) f).updateLoaction(text, lat, longetitude);
+//                    ((MapsFragment) f).getContentAndAddMarker();
+                getSupportFragmentManager().beginTransaction()
+                        .show(f)
+                        .commit();
+            oldFragmentTag = "maps";
+            }else {
+            ///fragment maken
+            Bundle args = new Bundle();
+            Fragment frag = new MapsFragment();
+            args.putString("Location", text);
+            args.putFloat("lat", lat);
+            args.putFloat("long", longetitude);
+            frag.setArguments(args);
+            //end fragment maken
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, frag, "maps")
+                    .addToBackStack(null)
+                    .commit();
+            oldFragmentTag = "maps";
+            }
     }
 
     /**

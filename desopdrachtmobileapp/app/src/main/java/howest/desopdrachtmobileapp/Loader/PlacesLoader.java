@@ -94,7 +94,7 @@ public class PlacesLoader extends AsyncTaskLoader<Cursor> {
                 String str = "";
                 HttpResponse response;
                 HttpClient myClient = new DefaultHttpClient();
-                HttpGet myConnection = new HttpGet("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+var+"+in+kortrijk&key=AIzaSyBq23lNzzJYFV9rAgZiLRmOj0XUl_tQCAw");
+                HttpGet myConnection = new HttpGet("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+var+"+in+kortrijk&key=AIzaSyA8EFLUvaxaQccnvKQxA1W0uhep9GzGfrU");
                 int id = 1;
                 try {
                     response = myClient.execute(myConnection);

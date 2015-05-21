@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -47,10 +51,31 @@ public class MapsFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 //        rootView = inflater.inflate(R.layout.fragment_maps, container, false);
 //        return rootView;
 
         return inflater.inflate(R.layout.fragment_maps, container, false);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+        menu.add(0, Menu.FIRST, Menu.NONE, "Toon alle geselecteerde plaatsen");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        getContentAndAddMarker();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.menulist, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
     public void onMapReady(GoogleMap map) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(0, 0), 2));
@@ -76,10 +101,24 @@ public class MapsFragment extends android.support.v4.app.Fragment {
         super.onResume();
         if (map == null) {
             map = fragment.getMap();
-        getContentAndAddMarker();
+            if(getArguments().getString("Location") == null)
+                getContentAndAddMarker();
+            else{
+                map.clear();
+                map.addMarker(new MarkerOptions()
+                        .position(new LatLng(getArguments().getFloat("lat"), getArguments().getFloat("long")))
+                        .title(getArguments().getString("Location")));
+
+            }
 //                map.addMarker(new MarkerOptions().position(new LatLng(school[0], school[1])));
 //            map.setMyLocationEnabled(true);
         }
+    }
+    public void updateLoaction(String text, float lat, float longetitude){
+        map.clear();
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(lat, longetitude))
+                .title(text));
     }
 
     public void getContentAndAddMarker() {
@@ -87,7 +126,7 @@ public class MapsFragment extends android.support.v4.app.Fragment {
         map.clear();
         for (String var : types)
             Ion.with(getActivity())
-                    .load("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+var+"+in+kortrijk&key=AIzaSyBq23lNzzJYFV9rAgZiLRmOj0XUl_tQCAw")
+                    .load("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+var+"+in+kortrijk&key=AIzaSyA8EFLUvaxaQccnvKQxA1W0uhep9GzGfrU")
                     .asJsonObject()
                     .setCallback(new FutureCallback<JsonObject>() {
                         @Override

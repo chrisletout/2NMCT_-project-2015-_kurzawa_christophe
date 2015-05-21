@@ -36,6 +36,8 @@ public class MainFragment extends ListFragment implements LoaderManager.LoaderCa
     ListClicked mCallback;
     String[] types;
     private String grid_currentQuery = null;
+    Boolean cursorloaded = false;
+    Cursor firstcursor;
 
 
 
@@ -59,8 +61,13 @@ public class MainFragment extends ListFragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        cursor = cursor;
-        mAdapter.swapCursor(cursor);
+        if(cursorloaded == false) {
+            mAdapter.swapCursor(cursor);
+            firstcursor = mAdapter.getCursor();
+            cursorloaded = true;
+        }
+        else
+            mAdapter.swapCursor(cursor);
     }
 
     @Override
@@ -201,7 +208,7 @@ public class MainFragment extends ListFragment implements LoaderManager.LoaderCa
         if(grid_currentQuery==null || grid_currentQuery=="")
             return new PlacesLoader(getActivity(), types);
         else
-            return new PlacesLoader(getActivity(), grid_currentQuery,mAdapter.getCursor());
+            return new PlacesLoader(getActivity(), grid_currentQuery,firstcursor);
     }
 
 }
